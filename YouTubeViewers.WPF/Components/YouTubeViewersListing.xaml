@@ -21,7 +21,8 @@
                         Background="White"
                         CornerRadius="5" />
                 <ListView BorderThickness="0"
-                          ItemsSource="{Binding YouTubeViewersListingItemViewModels}">
+                          ItemsSource="{Binding YouTubeViewersListingItemViewModels}"
+                          SelectedItem="{Binding SelectedYouTubeViewerListingItemViewModel}">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment"
