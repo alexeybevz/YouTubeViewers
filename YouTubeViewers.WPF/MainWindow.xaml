@@ -10,7 +10,9 @@
         Height="450"
         Width="800"
         FontSize="14">
-    <Grid Margin="25">
-        <views:YouTubeViewersView />
-    </Grid>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid Margin="25">
+            <views:YouTubeViewersView />
+        </Grid>
+    </ScrollViewer>
 </Window>
