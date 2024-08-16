@@ -4,14 +4,14 @@ namespace YouTubeViewers.WPF.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private readonly ModelNavigationStore _modalNavigationStore;
+        private readonly ModalNavigationStore _modalNavigationStore;
 
         public YouTubeViewersViewModel YouTubeViewersViewModel { get; }
 
         public ViewModelBase CurrentModalViewModel => _modalNavigationStore.CurrentViewModel;
         public bool IsModalOpen => _modalNavigationStore.IsOpen;
 
-        public MainViewModel(ModelNavigationStore modalNavigationStore, YouTubeViewersViewModel youTubeViewersViewModel)
+        public MainViewModel(ModalNavigationStore modalNavigationStore, YouTubeViewersViewModel youTubeViewersViewModel)
         {
             _modalNavigationStore = modalNavigationStore;
             YouTubeViewersViewModel = youTubeViewersViewModel;

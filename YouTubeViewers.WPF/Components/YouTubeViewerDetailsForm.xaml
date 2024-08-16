@@ -34,7 +34,7 @@
 
                 <TextBox Grid.Column="1"
                          Margin="20 0 0 0"
-                         Text="{Binding UserName}" />
+                         Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
 
             <Grid Grid.Row="1"
@@ -52,7 +52,7 @@
                 <CheckBox Grid.Column="1"
                           Margin="20 0 0 0"
                           VerticalAlignment="Center"
-                          IsChecked="{Binding IsSubscribedDisplay}" />
+                          IsChecked="{Binding IsSubscribed}" />
             </Grid>
 
             <Grid Grid.Row="2"
@@ -70,7 +70,7 @@
                 <CheckBox Grid.Column="1"
                           Margin="20 0 0 0"
                           VerticalAlignment="Center"
-                          IsChecked="{Binding IsMemberDisplay}" />
+                          IsChecked="{Binding IsMember}" />
             </Grid>
         </Grid>
 

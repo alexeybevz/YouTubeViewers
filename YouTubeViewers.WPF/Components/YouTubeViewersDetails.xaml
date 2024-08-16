@@ -30,7 +30,6 @@
                             </Style>
                         </Grid.Style>
                         <TextBlock Grid.Column="0"
-                                   FontSize="24"
                                    TextWrapping="Wrap"
                                    Text="Please select a YouTube viewer to see their details." />
                     </Grid>

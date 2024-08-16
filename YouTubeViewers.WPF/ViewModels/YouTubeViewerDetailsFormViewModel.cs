@@ -8,6 +8,11 @@ namespace YouTubeViewers.WPF.ViewModels
         private bool _isSubscribed;
         private bool _isMember;
 
+        public YouTubeViewerDetailsFormViewModel(ICommand submitCommand, ICommand cancelCommand)
+        {
+            SubmitCommand = submitCommand;
+            CancelCommand = cancelCommand;
+        }
         public string UserName
         {
             get
