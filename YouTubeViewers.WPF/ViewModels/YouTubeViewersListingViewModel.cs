@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -45,6 +46,18 @@ namespace YouTubeViewers.WPF.ViewModels
             _youTubeViewersStore.YouTubeViewersLoaded += YouTubeViewersStore_YouTubeViewersLoaded;
             _youTubeViewersStore.YouTubeViewerAdded += YouTubeViewersStore_YouTubeViewerAdded;
             _youTubeViewersStore.YouTubeViewerUpdated += YouTubeViewersStore_YouTubeViewerUpdated;
+            _youTubeViewersStore.YouTubeViewerDeleted += YouTubeViewersStore_YouTubeViewerDeleted;
+        }
+
+        private void YouTubeViewersStore_YouTubeViewerDeleted(Guid id)
+        {
+            var itemViewModel = _youTubeViewersListingItemViewModels.FirstOrDefault(x => x.YouTubeViewer?.Id == id);
+
+            if (itemViewModel != null)
+            {
+                _youTubeViewersListingItemViewModels.Remove(itemViewModel);
+            }
+        }
 
         public static YouTubeViewersListingViewModel LoadViewModel(YouTubeViewersStore youTubeViewersStore, SelectedYouTubeViewerStore selectedYouTubeViewerStore, ModalNavigationStore modalNavigationStore)
         {
@@ -78,6 +91,7 @@ namespace YouTubeViewers.WPF.ViewModels
             _youTubeViewersStore.YouTubeViewersLoaded -= YouTubeViewersStore_YouTubeViewersLoaded;
             _youTubeViewersStore.YouTubeViewerAdded -= YouTubeViewersStore_YouTubeViewerAdded;
             _youTubeViewersStore.YouTubeViewerUpdated -= YouTubeViewersStore_YouTubeViewerUpdated;
+            _youTubeViewersStore.YouTubeViewerDeleted -= YouTubeViewersStore_YouTubeViewerDeleted;
 
             base.Dispose();
         }

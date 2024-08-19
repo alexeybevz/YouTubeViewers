@@ -71,5 +71,14 @@ namespace YouTubeViewers.WPF.Stores
 
             YouTubeViewerUpdated?.Invoke(youTubeViewer);
         }
+
+        public async Task Delete(Guid id)
+        {
+            await _deleteYouTubeViewerCommand.Execute(id);
+
+            _youTubeViewers.RemoveAll(x => x.Id == id);
+
+            YouTubeViewerDeleted?.Invoke(id);
+        }
     }
 }
