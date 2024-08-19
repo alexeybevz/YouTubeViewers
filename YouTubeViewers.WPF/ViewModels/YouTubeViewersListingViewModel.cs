@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Input;
 using YouTubeViewers.Domain.Models;
+using YouTubeViewers.WPF.Commands;
 using YouTubeViewers.WPF.Stores;
 
 namespace YouTubeViewers.WPF.ViewModels
@@ -29,6 +31,8 @@ namespace YouTubeViewers.WPF.ViewModels
             }
         }
 
+        public ICommand LoadYouTubeViewersCommand { get; set; }
+
         public YouTubeViewersListingViewModel(YouTubeViewersStore youTubeViewersStore, SelectedYouTubeViewerStore selectedYouTubeViewerStore, ModalNavigationStore modalNavigationStore)
         {
             _youTubeViewersStore = youTubeViewersStore;
@@ -36,8 +40,27 @@ namespace YouTubeViewers.WPF.ViewModels
             _modalNavigationStore = modalNavigationStore;
             _youTubeViewersListingItemViewModels = new ObservableCollection<YouTubeViewersListingItemViewModel>();
 
+            LoadYouTubeViewersCommand = new LoadYouTubeViewersCommand(_youTubeViewersStore);
+
+            _youTubeViewersStore.YouTubeViewersLoaded += YouTubeViewersStore_YouTubeViewersLoaded;
             _youTubeViewersStore.YouTubeViewerAdded += YouTubeViewersStore_YouTubeViewerAdded;
             _youTubeViewersStore.YouTubeViewerUpdated += YouTubeViewersStore_YouTubeViewerUpdated;
+
+        public static YouTubeViewersListingViewModel LoadViewModel(YouTubeViewersStore youTubeViewersStore, SelectedYouTubeViewerStore selectedYouTubeViewerStore, ModalNavigationStore modalNavigationStore)
+        {
+            YouTubeViewersListingViewModel viewModel = new YouTubeViewersListingViewModel(youTubeViewersStore, selectedYouTubeViewerStore, modalNavigationStore);
+            viewModel.LoadYouTubeViewersCommand.Execute(null);
+            return viewModel;
+        }
+
+        private void YouTubeViewersStore_YouTubeViewersLoaded()
+        {
+            _youTubeViewersListingItemViewModels.Clear();
+
+            foreach (YouTubeViewer youTubeViewer in _youTubeViewersStore.YouTubeViewers)
+            {
+                AddYouTubeViewer(youTubeViewer);
+            }
         }
 
         private void YouTubeViewersStore_YouTubeViewerUpdated(YouTubeViewer youTubeViewer)
@@ -52,6 +75,7 @@ namespace YouTubeViewers.WPF.ViewModels
 
         protected override void Dispose()
         {
+            _youTubeViewersStore.YouTubeViewersLoaded -= YouTubeViewersStore_YouTubeViewersLoaded;
             _youTubeViewersStore.YouTubeViewerAdded -= YouTubeViewersStore_YouTubeViewerAdded;
             _youTubeViewersStore.YouTubeViewerUpdated -= YouTubeViewersStore_YouTubeViewerUpdated;
 
