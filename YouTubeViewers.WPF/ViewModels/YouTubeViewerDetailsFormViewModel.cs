@@ -13,6 +13,21 @@ namespace YouTubeViewers.WPF.ViewModels
             SubmitCommand = submitCommand;
             CancelCommand = cancelCommand;
         }
+
+        private bool _isSubmitting;
+        public bool IsSubmitting
+        {
+            get
+            {
+                return _isSubmitting;
+            }
+            set
+            {
+                _isSubmitting = value;
+                OnPropertyChanged(nameof(IsSubmitting));
+            }
+        }
+
         public string UserName
         {
             get

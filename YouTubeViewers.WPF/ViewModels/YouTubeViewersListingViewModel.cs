@@ -32,16 +32,12 @@ namespace YouTubeViewers.WPF.ViewModels
             }
         }
 
-        public ICommand LoadYouTubeViewersCommand { get; set; }
-
         public YouTubeViewersListingViewModel(YouTubeViewersStore youTubeViewersStore, SelectedYouTubeViewerStore selectedYouTubeViewerStore, ModalNavigationStore modalNavigationStore)
         {
             _youTubeViewersStore = youTubeViewersStore;
             _selectedYouTubeViewerStore = selectedYouTubeViewerStore;
             _modalNavigationStore = modalNavigationStore;
             _youTubeViewersListingItemViewModels = new ObservableCollection<YouTubeViewersListingItemViewModel>();
-
-            LoadYouTubeViewersCommand = new LoadYouTubeViewersCommand(_youTubeViewersStore);
 
             _youTubeViewersStore.YouTubeViewersLoaded += YouTubeViewersStore_YouTubeViewersLoaded;
             _youTubeViewersStore.YouTubeViewerAdded += YouTubeViewersStore_YouTubeViewerAdded;
@@ -57,13 +53,6 @@ namespace YouTubeViewers.WPF.ViewModels
             {
                 _youTubeViewersListingItemViewModels.Remove(itemViewModel);
             }
-        }
-
-        public static YouTubeViewersListingViewModel LoadViewModel(YouTubeViewersStore youTubeViewersStore, SelectedYouTubeViewerStore selectedYouTubeViewerStore, ModalNavigationStore modalNavigationStore)
-        {
-            YouTubeViewersListingViewModel viewModel = new YouTubeViewersListingViewModel(youTubeViewersStore, selectedYouTubeViewerStore, modalNavigationStore);
-            viewModel.LoadYouTubeViewersCommand.Execute(null);
-            return viewModel;
         }
 
         private void YouTubeViewersStore_YouTubeViewersLoaded()
