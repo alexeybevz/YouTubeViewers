@@ -8,8 +8,12 @@
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -26,7 +30,8 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"
                                       SharedSizeGroup="Label" />
-                    <ColumnDefinition Width="*" MaxWidth="250" />
+                    <ColumnDefinition Width="*"
+                                      MaxWidth="250" />
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0"
@@ -87,7 +92,15 @@
                     Style="{StaticResource ButtonSecondary}"
                     Margin="0 0 5 0"
                     Cursor="Hand" />
-            <custom:LoadingSpinner IsLoading="{Binding IsSubmitting}" Diameter="25" Thickness="2" />
+            <custom:LoadingSpinner IsLoading="{Binding IsSubmitting}"
+                                   Diameter="25"
+                                   Thickness="2" />
         </WrapPanel>
+
+        <TextBlock Grid.Row="2"
+                   Margin="0 15 0 0"
+                   Style="{StaticResource ErrorMessage}"
+                   Text="{Binding ErrorMessage}"
+                   Visibility="{Binding HasErrorMessage, Converter={StaticResource BooleanToVisibilityConverter}}" />
     </Grid>
 </UserControl>

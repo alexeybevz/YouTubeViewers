@@ -9,6 +9,9 @@
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>    
     <Grid>
         <Border Padding="10"
                 TextBlock.FontSize="16">
@@ -18,8 +21,14 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0"
-                           Text="{Binding UserName}" />
+                <StackPanel>
+                    <TextBlock Text="{Binding UserName}" />
+
+                    <TextBlock FontSize="10"
+                               Style="{StaticResource ErrorMessage}"
+                               Text="{Binding ErrorMessage}"
+                               Visibility="{Binding HasErrorMessage, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                </StackPanel>
 
                 <Grid Grid.Column="1"
                       Margin="10 0 0 0">

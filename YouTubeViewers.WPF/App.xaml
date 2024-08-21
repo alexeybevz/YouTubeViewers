@@ -11,6 +11,15 @@
                    x:Key="PageHeader">
                 <Setter Property="FontSize"
                         Value="32" />
+                <Setter Property="VerticalAlignment"
+                        Value="Center" />
+            </Style>
+
+            <Style TargetType="TextBlock"
+                   x:Key="ErrorMessage">
+                <Setter Property="Foreground"
+                        Value="Red" />
+                
             </Style>
 
             <Style TargetType="Button">
