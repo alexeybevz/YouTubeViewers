@@ -22,7 +22,7 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel>
-                    <TextBlock Text="{Binding UserName}" />
+                    <TextBlock Text="{Binding UserName}" TextWrapping="Wrap" />
 
                     <TextBlock FontSize="10"
                                Style="{StaticResource ErrorMessage}"

@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Input;
 using YouTubeViewers.Domain.Models;
-using YouTubeViewers.WPF.Commands;
 using YouTubeViewers.WPF.Stores;
 
 namespace YouTubeViewers.WPF.ViewModels
@@ -18,17 +16,16 @@ namespace YouTubeViewers.WPF.ViewModels
 
         public IEnumerable<YouTubeViewersListingItemViewModel> YouTubeViewersListingItemViewModels => _youTubeViewersListingItemViewModels;
 
-        private YouTubeViewersListingItemViewModel _selectedYouTubeViewerListingItemViewModel;
-
         public YouTubeViewersListingItemViewModel SelectedYouTubeViewerListingItemViewModel
         {
-            get { return _selectedYouTubeViewerListingItemViewModel; }
+            get
+            {
+                return _youTubeViewersListingItemViewModels.FirstOrDefault(y => y.YouTubeViewer.Id == _selectedYouTubeViewerStore.SelectedYouTubeViewer?.Id);
+            }
             set
             {
-                _selectedYouTubeViewerListingItemViewModel = value;
+                _selectedYouTubeViewerStore.SelectedYouTubeViewer = value?.YouTubeViewer;
                 OnPropertyChanged(nameof(SelectedYouTubeViewerListingItemViewModel));
-
-                _selectedYouTubeViewerStore.SelectedYouTubeViewer = _selectedYouTubeViewerListingItemViewModel?.YouTubeViewer;
             }
         }
 
@@ -39,10 +36,19 @@ namespace YouTubeViewers.WPF.ViewModels
             _modalNavigationStore = modalNavigationStore;
             _youTubeViewersListingItemViewModels = new ObservableCollection<YouTubeViewersListingItemViewModel>();
 
+            _selectedYouTubeViewerStore.SelectedYouTubeViewerChanged += SelectedYouTubeViewerStore_SelectedYouTubeViewerChanged;
+
             _youTubeViewersStore.YouTubeViewersLoaded += YouTubeViewersStore_YouTubeViewersLoaded;
             _youTubeViewersStore.YouTubeViewerAdded += YouTubeViewersStore_YouTubeViewerAdded;
             _youTubeViewersStore.YouTubeViewerUpdated += YouTubeViewersStore_YouTubeViewerUpdated;
             _youTubeViewersStore.YouTubeViewerDeleted += YouTubeViewersStore_YouTubeViewerDeleted;
+
+            _youTubeViewersListingItemViewModels.CollectionChanged += YouTubeViewersListingItemViewModels_CollectionChanged;
+        }
+
+        private void SelectedYouTubeViewerStore_SelectedYouTubeViewerChanged()
+        {
+            OnPropertyChanged(nameof(SelectedYouTubeViewerListingItemViewModel));
         }
 
         private void YouTubeViewersStore_YouTubeViewerDeleted(Guid id)
@@ -94,6 +100,11 @@ namespace YouTubeViewers.WPF.ViewModels
         {
             var itemViewModel = new YouTubeViewersListingItemViewModel(youTubeViewer, _youTubeViewersStore, _modalNavigationStore);
             _youTubeViewersListingItemViewModels.Add(itemViewModel);
+        }
+
+        private void YouTubeViewersListingItemViewModels_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(SelectedYouTubeViewerListingItemViewModel));
         }
     }
 }

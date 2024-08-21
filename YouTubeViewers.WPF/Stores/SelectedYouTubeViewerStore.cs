@@ -27,8 +27,14 @@ namespace YouTubeViewers.WPF.Stores
         {
             _youTubeViewersStore = youTubeViewersStore;
 
+            _youTubeViewersStore.YouTubeViewerAdded += YouTubeViewersStore_YouTubeViewerAdded;
             _youTubeViewersStore.YouTubeViewerUpdated += YouTubeViewersStore_YouTubeViewerUpdated;
             _youTubeViewersStore.YouTubeViewerDeleted += YouTubeViewersStore_YouTubeViewerDeleted;
+        }
+
+        private void YouTubeViewersStore_YouTubeViewerAdded(YouTubeViewer youTubeViewer)
+        {
+            SelectedYouTubeViewer = youTubeViewer;
         }
 
         private void YouTubeViewersStore_YouTubeViewerDeleted(Guid id)
